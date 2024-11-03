@@ -13,8 +13,7 @@ public class Main {
     Resident resident = new Resident("Resident", 10, 6);
     Burglar burglar = new Burglar("Burglar", 10, 3);
 
-        game.gameStart();
         game.LivingRoom();
-
+        game.gameStart();
     }
 }

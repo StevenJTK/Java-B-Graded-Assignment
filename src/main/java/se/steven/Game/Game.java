@@ -2,7 +2,9 @@ package se.steven.Game;
 import java.util.Scanner;
 import se.steven.Models.Resident;
 import se.steven.Models.Burglar;
-import static se.steven.Models.Entity.startFight;
+import static se.steven.Models.Entity.fightLogic;
+
+
 
 // Implement logic for constant methods
 
@@ -13,8 +15,9 @@ public class Game {
    private final static String BEDROOM = "Bedroom";
    private final static String HALL = "Hall";
    private final static String OFFICE = "Office";
-   private final static String LIVINGROOM = "Living Room";
-   private static String currentLocation = LIVINGROOM;
+   private final static String LIVING_ROOM = "Living Room";
+   private final static String GAME_START = "Game Start";
+   private static String currentLocation = GAME_START;
    private boolean running = true;
 
     Scanner sc = new Scanner(System.in);
@@ -31,7 +34,7 @@ public class Game {
     switch (choice) {
         case "Kitchen" -> Kitchen();
         case "Bedroom" -> Bedroom();
-        case "Hall" -> startFight(burglar, resident);
+        case "Hall" -> Hall();
         case "Office" -> Office();
         case "Living Room" -> LivingRoom();
         case "Quit" -> running = false;
@@ -40,16 +43,16 @@ public class Game {
     }
 
    public static void LivingRoom() {
-        if(!currentLocation.equals(LIVINGROOM)) {
-            currentLocation = LIVINGROOM;
+        if(!currentLocation.equals(LIVING_ROOM)) {
+            currentLocation = LIVING_ROOM;
         }   else {
             System.out.println("You cannot go that way yet. ");
         }
    }
 
     // Implement exploration but nothing of value comes out
-    void Bedroom() {
-        if(currentLocation.equals(LIVINGROOM)) {
+    private void Bedroom() {
+        if(currentLocation.equals(LIVING_ROOM)) {
             System.out.println("Entering Bedroom");
             currentLocation = BEDROOM;
         }   else {
@@ -57,23 +60,32 @@ public class Game {
         }
     }
     // Implement logic for once the frying pan has been found
-    void Kitchen() {
-        System.out.println("You enter the " + KITCHEN + " and see a frying pan on the table.");
-        System.out.println("You may use the frying pan to knockout the attacker");
-        System.out.println("What is your choice? Input Take or Exit");
-        String choice = sc.nextLine();
-        if (choice.equalsIgnoreCase("Take")) {
-            System.out.println("You pick up the frying pan and exit the room.");
-            resident.setDamage(resident.getDamage() + 3);
-            currentLocation = LIVINGROOM;
+    private void Kitchen() {
+        if (currentLocation.equals(LIVING_ROOM)) {
+            System.out.println("Entering Kitchen");
+            currentLocation = KITCHEN;
         } else {
-            System.out.println("You go back to the living room. ");
-            currentLocation = LIVINGROOM;
+            System.out.println("You cannot enter from this direction");
+        }
+
+        if (currentLocation.equals(KITCHEN)) {
+            System.out.println("You enter the " + KITCHEN + " and see a frying pan on the table.");
+            System.out.println("You may use the frying pan to knockout the attacker");
+            System.out.println("What is your choice? Input Take or Exit");
+            String choice = sc.nextLine();
+
+            if (choice.equalsIgnoreCase("Take")) {
+                System.out.println("You pick up the frying pan and exit the room.");
+                resident.setDamage(resident.getDamage() + 3);
+            } else {
+                System.out.println("You go back to the living room. ");
+            }
+            currentLocation = LIVING_ROOM;
         }
     }
-    // Implement burglar & fight sequence
-    void Hall() {
-        if(currentLocation.equals(LIVINGROOM)) {
+        // Implement burglar & fight sequence
+    private void Hall() {
+        if(currentLocation.equals(LIVING_ROOM)) {
             System.out.println("Entering Hall");
             currentLocation = HALL;
         }   else {
@@ -81,15 +93,12 @@ public class Game {
         }
     }
     // Test this
-    void Office() {
-        if(burglar.isConcious()) {
-            System.out.println("You need to take out the burglar before entering the office. ");
+    private void Office() {
+        if(currentLocation.equals(LIVING_ROOM)) {
+            System.out.println("Entering Office");
             currentLocation = OFFICE;
-            System.out.println("You return to the living room. ");
-            currentLocation = LIVINGROOM;
         }   else {
-            System.out.println("You have succesfully taken out the burglar and called the police, well done! ");
-            running = false;
+            System.out.println("You cannot enter from this direction");
         }
     }
 

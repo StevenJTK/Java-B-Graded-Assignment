@@ -5,7 +5,6 @@ package se.steven.Models;
     int health;
     int damage;
 
-
     Entity(String role, int health, int damage) {
         this.role = role;
         this.health = health;
@@ -28,51 +27,27 @@ package se.steven.Models;
 
 
     void punch(Entity toPunch) {
-        toPunch.health -= damage;
+
+        toPunch.takeHit(damage);
     }
 
     void takeHit(int damage) {
+
         health -= damage;
     }
 
     public boolean isConcious() {
+
         return health <= 0;
     }
 
-   public static void fightLogic(Burglar attacker, Resident defender) {
+        public static void fightLogic(Burglar attacker, Resident defender) {
+
             attacker.punch(defender);
-            System.out.println(defender.role + " has been attacked! ");
-            defender.takeHit(attacker.damage);
-            System.out.println(defender.role + " has taken " + attacker.damage + " damage! ");
-            defender.health -= attacker.damage;
+            System.out.println(attacker.getRole() + " has attacked " + defender.getRole() + " and has " + defender.getHealth() + " health");
             defender.punch(attacker);
-            attacker.health -= attacker.damage;
+            System.out.println("You defend against " + attacker.getRole() + " and now has " + attacker.getHealth() + " health");
 
-            if(attacker.isConcious()) {
-                System.out.println("The burglar is still concious!" + attacker.health);
-            }   else {
-                System.out.println("The burglar has been knocked out! Well done. ");
-                System.out.println("You can now call the police from your office.");
-            }
+
         }
-
-
-        public static void startFight(Burglar attacker, Resident defender) {
-            fightLogic(attacker, defender);
-
-            if(attacker.health > 0) {
-                fightLogic(attacker, defender);
-            }
-        }
-
-
-
-
-
-
-
-
     }
-
-
-
