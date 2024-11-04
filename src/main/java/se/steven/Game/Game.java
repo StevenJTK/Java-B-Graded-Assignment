@@ -2,11 +2,8 @@ package se.steven.Game;
 import java.util.Scanner;
 import se.steven.Models.Resident;
 import se.steven.Models.Burglar;
-import static se.steven.Models.Entity.fightLogic;
+import static se.steven.Game.Fight.battleLogic;
 
-
-
-// Implement logic for constant methods
 
 public class Game {
 
@@ -24,6 +21,7 @@ public class Game {
 
     Resident resident = new Resident("Resident", 10, 5);
     Burglar burglar = new Burglar("Burglar", 10, 7);
+
 
     public void gameStart() {
 
@@ -50,11 +48,18 @@ public class Game {
         }
    }
 
-    // Implement exploration but nothing of value comes out
+    // Implement equalsIgnoreCase
     private void Bedroom() {
         if(currentLocation.equals(LIVING_ROOM)) {
-            System.out.println("Entering Bedroom");
             currentLocation = BEDROOM;
+            System.out.println("You have entered the bedroom. It doesn't look like there is much to do here.");
+            System.out.println("Would you like to explore the room or exit to the living room? ");
+            String localChoice = sc.nextLine();
+            switch(localChoice) {
+                case "Explore" -> exploreBedroom();
+                case "Exit" -> exitBedroom();
+            }
+
         }   else {
             System.out.println("You cannot enter from this direction");
         }
@@ -86,13 +91,20 @@ public class Game {
         // Implement burglar & fight sequence
     private void Hall() {
         if(currentLocation.equals(LIVING_ROOM)) {
-            System.out.println("Entering Hall");
+            System.out.println("You enter the hall and see the burglar.");
             currentLocation = HALL;
         }   else {
             System.out.println("You cannot enter from this direction");
         }
+
+        System.out.println("You can choose to stand your ground and Fight or Flee. ");
+            String hallChoice = sc.nextLine();
+            switch(hallChoice) {
+                case "Fight" -> battleLogic(burglar, resident);
+                case "Flee" -> exitHall();
+            }
     }
-    // Test this
+
     private void Office() {
         if(currentLocation.equals(LIVING_ROOM)) {
             System.out.println("Entering Office");
@@ -100,6 +112,30 @@ public class Game {
         }   else {
             System.out.println("You cannot enter from this direction");
         }
+    }
+
+
+    private void exploreBedroom() {
+        System.out.println("You explore the bedroom, however you find nothing of value.");
+        if(currentLocation.equals(BEDROOM))
+            System.out.println("You exit the bedroom and back to the living room. ");
+        currentLocation = LIVING_ROOM;
+    }
+
+    private void exitBedroom()  {
+        System.out.println("You choose to exit the bedroom and return to the living room. ");
+        currentLocation = LIVING_ROOM;
+    }
+
+    private void exploreHall() {
+        System.out.println("You choose to explore the Hall and fight the burglar. ");
+    }
+
+
+    private void exitHall() {
+        if(currentLocation.equals(HALL));
+        System.out.println("You sneak away from the hall and back to the living room. ");
+        currentLocation = LIVING_ROOM;
     }
 
 }

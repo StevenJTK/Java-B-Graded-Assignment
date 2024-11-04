@@ -1,53 +1,48 @@
 package se.steven.Models;
+import java.util.Scanner;
 
     public abstract class Entity {
-    String role;
-    int health;
-    int damage;
+        String role;
+        int health;
+        int damage;
 
-    Entity(String role, int health, int damage) {
-        this.role = role;
-        this.health = health;
-        this.damage = damage;
-    }
+        Entity(String role, int health, int damage) {
+            this.role = role;
+            this.health = health;
+            this.damage = damage;
+        }
 
+        static Scanner sc = new Scanner(System.in);
 
-    // Fetches values & returns
-    public String getRole() {
-        return role;
-    }
+        // Fetches values & returns
+        public String getRole() {
 
-    public int getHealth() {
-        return health;
-    }
+            return role;
+        }
 
-    public int getDamage() {
-        return damage;
-    }
+        public int getHealth() {
 
+            return health;
+        }
 
-    void punch(Entity toPunch) {
+        public int getDamage() {
 
-        toPunch.takeHit(damage);
-    }
-
-    void takeHit(int damage) {
-
-        health -= damage;
-    }
-
-    public boolean isConcious() {
-
-        return health <= 0;
-    }
-
-        public static void fightLogic(Burglar attacker, Resident defender) {
-
-            attacker.punch(defender);
-            System.out.println(attacker.getRole() + " has attacked " + defender.getRole() + " and has " + defender.getHealth() + " health");
-            defender.punch(attacker);
-            System.out.println("You defend against " + attacker.getRole() + " and now has " + attacker.getHealth() + " health");
+            return damage;
+        }
 
 
+        public void punch(Entity toPunch) {
+
+            toPunch.takeHit(damage);
+        }
+
+        void takeHit(int damage) {
+
+            health -= damage;
+        }
+
+        public boolean isConcious() {
+
+            return health <= 0;
         }
     }
