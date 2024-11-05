@@ -19,8 +19,8 @@ public class Game {
 
     Scanner sc = new Scanner(System.in);
 
-    Resident resident = new Resident("Resident", 10, 5);
-    Burglar burglar = new Burglar("Burglar", 10, 7);
+    Resident resident = new Resident("Resident", 10, 3);
+    Burglar burglar = new Burglar("Burglar", 10, 4);
 
 
     public void gameStart() {
@@ -127,8 +127,9 @@ public class Game {
         currentLocation = LIVING_ROOM;
     }
 
-    private void exploreHall() {
-        System.out.println("You choose to explore the Hall and fight the burglar. ");
+    static void exploreHall() {
+
+        currentLocation = LIVING_ROOM;
     }
 
 

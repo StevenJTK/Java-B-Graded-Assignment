@@ -34,6 +34,9 @@ import java.util.Scanner;
         public void punch(Entity toPunch) {
 
             toPunch.takeHit(damage);
+
+            if(toPunch.health < 0)
+                toPunch.health = 0;
         }
 
         void takeHit(int damage) {
@@ -41,8 +44,8 @@ import java.util.Scanner;
             health -= damage;
         }
 
-        public boolean isConcious() {
+        public boolean isConcious(){
 
-            return health <= 0;
+            return this.health > 0;
         }
     }
