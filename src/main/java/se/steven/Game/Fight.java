@@ -1,5 +1,4 @@
 package se.steven.Game;
-import se.steven.Models.Entity;
 import se.steven.Models.Resident;
 import se.steven.Models.Burglar;
 import java.util.Scanner;
@@ -42,4 +41,6 @@ public class Fight extends Game {
             }
         }
     }
+
+
 }

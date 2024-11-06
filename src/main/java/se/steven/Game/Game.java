@@ -3,6 +3,7 @@ import java.util.Scanner;
 import se.steven.Models.Resident;
 import se.steven.Models.Burglar;
 import static se.steven.Game.Fight.battleLogic;
+import static se.steven.Game.Fight.isSafe;
 
 
 public class Game {
@@ -15,7 +16,7 @@ public class Game {
    private final static String LIVING_ROOM = "Living Room";
    private final static String GAME_START = "Game Start";
    private static String currentLocation = GAME_START;
-   private boolean running = true;
+   private static boolean running = true;
 
     Scanner sc = new Scanner(System.in);
 
@@ -88,7 +89,7 @@ public class Game {
             currentLocation = LIVING_ROOM;
         }
     }
-        // Implement burglar & fight sequence
+
     private void Hall() {
         if(currentLocation.equals(LIVING_ROOM)) {
             System.out.println("You enter the hall and see the burglar.");
@@ -107,7 +108,7 @@ public class Game {
 
     private void Office() {
         if(currentLocation.equals(LIVING_ROOM)) {
-            System.out.println("Entering Office");
+            isSafe(burglar);
             currentLocation = OFFICE;
         }   else {
             System.out.println("You cannot enter from this direction");
@@ -138,5 +139,18 @@ public class Game {
         System.out.println("You sneak away from the hall and back to the living room. ");
         currentLocation = LIVING_ROOM;
     }
+
+
+    public static void isSafe(Burglar attacker) {
+
+        if(attacker.isConcious()) {
+            System.out.println("You may not enter the office yet, the burglar is still alive!");
+
+        }   else {
+            System.out.println("After defeating the burglar, you enter the office and call the police and finish the game. ");
+            running = false;
+        }
+    }
+
 
 }

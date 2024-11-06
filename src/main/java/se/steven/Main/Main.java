@@ -2,7 +2,7 @@ package se.steven.Main;
 import se.steven.Game.Game;
 import se.steven.Models.Resident;
 import se.steven.Models.Burglar;
-import se.steven.Models.Entity;
+
 
 
 public class Main {
