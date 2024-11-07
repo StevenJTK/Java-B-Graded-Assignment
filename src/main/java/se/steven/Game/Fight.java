@@ -21,8 +21,7 @@ public class Fight extends Game {
             System.out.println("You now have " + defender.getHealth() + " health left.");
 
             if (!defender.isConcious()) {
-                System.out.println("The burglar knocks you unconscious and continues to ransack your home.");
-                System.out.println("GAME OVER! ");
+                gameOver();
                 running = false;
                 break;
             }
