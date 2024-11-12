@@ -39,7 +39,7 @@ import java.util.Scanner;
                 toPunch.health = 0;
         }
 
-        void takeHit(int damage) {
+        public void takeHit(int damage) {
 
             health -= damage;
         }

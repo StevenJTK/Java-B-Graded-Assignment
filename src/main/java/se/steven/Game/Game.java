@@ -4,7 +4,10 @@ import se.steven.Models.Resident;
 import se.steven.Models.Burglar;
 import static se.steven.Game.Fight.battleLogic;
 
-
+// ADD CLOSE SCANNER!!
+// Implement default in Enhanced Switch
+// Polymorph Entity + Resident/Burglar?
+// Experiment Entity + interface
 
 public class Game {
 
@@ -133,8 +136,19 @@ public class Game {
             currentLocation = LIVING_ROOM;
 
         } else {
-            System.out.println("After defeating the burglar, you enter the office and call the police and finish the game. ");
-            running = false;
+            System.out.println("After defeating the burglar, you enter the office. Would you like to call the police or continue exploring? ");
+            String officeChoice = sc.nextLine();
+            switch (officeChoice) {
+                case "Call" -> {
+                    System.out.println("You ring the police and get to safety.");
+                    running = false;
+                }
+                case "Explore" -> {
+                    System.out.println("You return to the living room to continue to explore.");
+                    currentLocation = LIVING_ROOM;
+                }
+
+            }
         }
 
     }
