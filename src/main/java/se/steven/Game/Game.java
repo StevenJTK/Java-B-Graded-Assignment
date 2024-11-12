@@ -4,11 +4,6 @@ import se.steven.Models.Resident;
 import se.steven.Models.Burglar;
 import static se.steven.Game.Fight.battleLogic;
 
-// ADD CLOSE SCANNER!!
-// Implement default in Enhanced Switch
-// Polymorph Entity + Resident/Burglar?
-// Experiment Entity + interface
-
 public class Game {
 
     // Constants
@@ -24,27 +19,25 @@ public class Game {
 
     Scanner sc = new Scanner(System.in);
 
+    // Constructors
     Resident resident = new Resident("Resident", 10, 3);
     Burglar burglar = new Burglar("Burglar", 10, 4);
+    static Print print = new Print();
 
 
-    public void gameStart() {
-
+    public void gameStart() throws InterruptedException {
         while (running) {
-            System.out.println("You can go to the Kitchen, Bedroom, Hall, Office or Living Room");
+            print.chooseDirection();
             String choice = sc.nextLine();
 
-            if (running) {
-
-            }
-
             switch (choice) {
-                case "Kitchen" -> Kitchen();
-                case "Bedroom" -> Bedroom();
-                case "Hall" -> Hall();
-                case "Office" -> Office(burglar);
-                case "Living Room" -> LivingRoom();
-                case "Quit" -> running = false;
+                case "Kitchen", "kitchen" -> Kitchen();
+                case "Bedroom", "bedroom" -> Bedroom();
+                case "Hall", "hall" -> Hall();
+                case "Office", "office" -> Office(burglar);
+                case "Living Room", "living room" -> LivingRoom();
+                case "Quit", "quit" -> running = false;
+                default -> System.out.println("Invalid choice");
             }
         }
     }
@@ -53,74 +46,76 @@ public class Game {
         if (!currentLocation.equals(LIVING_ROOM)) {
             currentLocation = LIVING_ROOM;
         } else {
-            System.out.println("You cannot go that way yet. ");
+            print.wrongWay();
         }
     }
 
-    // Implement equalsIgnoreCase
-    private void Bedroom() {
+    private void Bedroom() throws InterruptedException {
         if (currentLocation.equals(LIVING_ROOM)) {
             currentLocation = BEDROOM;
-            System.out.println("You have entered the bedroom. It doesn't look like there is much to do here.");
-            System.out.println("Would you like to explore the room or exit to the living room? ");
+            print.bedroomEntry();
             String localChoice = sc.nextLine();
             switch (localChoice) {
-                case "Explore" -> exploreBedroom();
-                case "Exit" -> exitBedroom();
+                case "Explore", "explore" -> {
+                    print.exploreBedroom();
+                    currentLocation = LIVING_ROOM;
+                }
+                case "Return", "return" -> {
+                    print.exitBedroom();
+                    currentLocation = LIVING_ROOM;
+                }
             }
-
         } else {
-            System.out.println("You cannot enter from this direction");
+            print.wrongWay();
         }
     }
 
-    private void Kitchen() {
+    private void Kitchen() throws InterruptedException {
 
         if (currentLocation.equals(LIVING_ROOM)) {
-            System.out.println("Entering Kitchen");
             currentLocation = KITCHEN;
 
-
             if (fryingPanFound) {
-                System.out.println("You have already explored the kitchen and found the frying pan.");
-                System.out.println("You return to the living room.");
+                print.fryingPanFound();
                 currentLocation = LIVING_ROOM;
                 return;
             }
-
-            System.out.println("You enter the " + KITCHEN + " and see a frying pan on the table.");
-            System.out.println("You may use the frying pan to knock out the attacker.");
-            System.out.println("What is your choice? Input 'Take' or 'Exit'");
-
+            print.firstEntry();
             String choice = sc.nextLine();
 
             if (choice.equalsIgnoreCase("Take")) {
                 fryingPanFound = true;
-                System.out.println("You pick up the frying pan and exit the room.");
+                print.acceptPan();
                 resident.setDamage(resident.getDamage() + 3);
                 currentLocation = LIVING_ROOM;
             } else {
-                System.out.println("You go back to the living room.");
+                print.refusePan();
                 currentLocation = LIVING_ROOM;
             }
         } else {
-            System.out.println("You cannot enter from this direction.");
+            print.wrongWay();
         }
     }
 
     private void Hall() {
         if (currentLocation.equals(LIVING_ROOM)) {
-            System.out.println("You enter the hall and see the burglar.");
+            print.hallEntry();
             currentLocation = HALL;
         } else {
-            System.out.println("You cannot enter from this direction");
+            print.wrongWay();
         }
 
-        System.out.println("You can choose to stand your ground and Fight or Flee. ");
+        print.hallChoice();
         String hallChoice = sc.nextLine();
         switch (hallChoice) {
-            case "Fight" -> battleLogic(burglar, resident);
-            case "Flee" -> exitHall();
+            case "Fight", "fight" -> battleLogic(burglar, resident);
+            case "Flee", "flee" -> {
+                if(currentLocation.equals(HALL)) {
+                    print.hallExit();
+                    currentLocation = LIVING_ROOM;
+                }
+            }
+            default -> System.out.println("Invalid choice");
         }
     }
 
@@ -128,15 +123,15 @@ public class Game {
         if (currentLocation.equals(LIVING_ROOM)) {
             currentLocation = OFFICE;
         } else {
-            System.out.println("You cannot enter from this direction");
+            print.wrongWay();
         }
 
         if (attacker.isConcious()) {
-            System.out.println("You may not enter the office yet, the burglar is still alive!");
+            print.burglarConscious();
             currentLocation = LIVING_ROOM;
 
         } else {
-            System.out.println("After defeating the burglar, you enter the office. Would you like to call the police or continue exploring? ");
+            print.victoryChoice();
             String officeChoice = sc.nextLine();
             switch (officeChoice) {
                 case "Call" -> {
@@ -154,27 +149,8 @@ public class Game {
     }
 
 
-    private void exploreBedroom() {
-        System.out.println("You explore the bedroom, however you find nothing of value.");
-        if (currentLocation.equals(BEDROOM))
-            System.out.println("You exit the bedroom and back to the living room. ");
-        currentLocation = LIVING_ROOM;
-    }
-
-    private void exitBedroom() {
-        System.out.println("You choose to exit the bedroom and return to the living room. ");
-        currentLocation = LIVING_ROOM;
-    }
-
     static void exploreHall() {
 
-        currentLocation = LIVING_ROOM;
-    }
-
-
-    private void exitHall() {
-        if (currentLocation.equals(HALL)) ;
-        System.out.println("You sneak away from the hall and back to the living room. ");
         currentLocation = LIVING_ROOM;
     }
 
@@ -183,7 +159,4 @@ public class Game {
         running = false;
         System.out.println("The burglar has defeated you. GAME OVER!");
     }
-
-
-
 }
