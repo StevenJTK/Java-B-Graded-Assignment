@@ -1,24 +1,20 @@
 package se.steven.Game;
 import se.steven.Models.Resident;
 import se.steven.Models.Burglar;
-import java.util.Scanner;
 
 
 public class Fight extends Game {
 
-
     private static boolean running = true;
 
-    Fight fight = new Fight();
-    static Scanner sc = new Scanner(System.in);
-
-    public static void battleLogic(Burglar attacker, Resident defender) {
+    public static void battleLogic(Burglar attacker, Resident defender) throws InterruptedException {
 
         while (running && attacker.isConcious() && defender.isConcious()) {
 
             attacker.punch(defender);
-            System.out.println("The burglar catches you by surprise and sucker punches you for " + attacker.getDamage() + " damage.");
+            System.out.println("The " + burglar.getRole() + " punches you for " + attacker.getDamage() + " damage.");
             System.out.println("You now have " + defender.getHealth() + " health left.");
+            Thread.sleep(1500);
 
             if (!defender.isConcious()) {
                 gameOver();
@@ -26,14 +22,14 @@ public class Fight extends Game {
                 break;
             }
 
-
             defender.punch(attacker);
-            System.out.println("You hit back for " + defender.getDamage() + " damage.");
-            System.out.println("The thief now has " + attacker.getHealth() + " health left.");
+            System.out.println("You hit the " + burglar.getRole() + " back for " + defender.getDamage() + " damage.");
+            System.out.println("The " + burglar.getRole()  + " now has " + attacker.getHealth() + " health left.");
 
             if (!attacker.isConcious()) {
-                System.out.println("You have successfully knocked out the thief! ");
-                System.out.println("Continue to the Office in order to call the police and finish the game. ");
+                System.out.println("You have successfully knocked out the " + burglar.getRole() + "!");
+                Thread.sleep(1000);
+                System.out.println("Continue to the office in order to call the police and finish the game. ");
                 exploreHall();
                 running = false;
                 break;

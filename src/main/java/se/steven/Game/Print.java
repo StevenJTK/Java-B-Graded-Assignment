@@ -13,6 +13,12 @@ public class Print {
         System.out.println("You cannot go that way");
     }
 
+   public void alreadyInLivingRoom() {
+        System.out.println("You're already in the living room, silly.");
+   }
+
+
+
     /* ----------------------------------------- */
     /* -----------------BEDROOM------------------ */
 
@@ -90,5 +96,4 @@ public class Print {
     public void victoryChoice() {
         System.out.println("With the burglar defeated, you may choose to call the police or continue to explore.");
     }
-
 }

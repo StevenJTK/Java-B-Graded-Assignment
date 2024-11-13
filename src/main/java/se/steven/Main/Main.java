@@ -10,10 +10,10 @@ public class Main {
 
 
     Game game = new Game();
-    Resident resident = new Resident("Resident", 10, 6);
-    Burglar burglar = new Burglar("Burglar", 10, 3);
 
         game.LivingRoom();
         game.gameStart();
+
+
     }
 }

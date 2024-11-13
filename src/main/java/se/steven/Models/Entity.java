@@ -1,5 +1,4 @@
 package se.steven.Models;
-import java.util.Scanner;
 
     public abstract class Entity {
         String role;
@@ -11,8 +10,6 @@ import java.util.Scanner;
             this.health = health;
             this.damage = damage;
         }
-
-        static Scanner sc = new Scanner(System.in);
 
         // Fetches values & returns
         public String getRole() {

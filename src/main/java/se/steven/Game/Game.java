@@ -20,8 +20,8 @@ public class Game {
     Scanner sc = new Scanner(System.in);
 
     // Constructors
-    Resident resident = new Resident("Resident", 10, 3);
-    Burglar burglar = new Burglar("Burglar", 10, 4);
+    Resident resident = new Resident("resident", 10, 3);
+    static Burglar burglar = new Burglar("burglar", 10, 4);
     static Print print = new Print();
 
 
@@ -46,7 +46,7 @@ public class Game {
         if (!currentLocation.equals(LIVING_ROOM)) {
             currentLocation = LIVING_ROOM;
         } else {
-            print.wrongWay();
+            print.alreadyInLivingRoom();
         }
     }
 
@@ -97,7 +97,7 @@ public class Game {
         }
     }
 
-    private void Hall() {
+    private void Hall() throws InterruptedException {
         if (currentLocation.equals(LIVING_ROOM)) {
             print.hallEntry();
             currentLocation = HALL;
@@ -115,11 +115,12 @@ public class Game {
                     currentLocation = LIVING_ROOM;
                 }
             }
+            case "Quit", "quit" -> running = false;
             default -> System.out.println("Invalid choice");
         }
     }
 
-    private void Office(Burglar attacker) {
+    private void Office(Burglar attacker) throws InterruptedException {
         if (currentLocation.equals(LIVING_ROOM)) {
             currentLocation = OFFICE;
         } else {
@@ -134,15 +135,18 @@ public class Game {
             print.victoryChoice();
             String officeChoice = sc.nextLine();
             switch (officeChoice) {
-                case "Call" -> {
+                case "Call", "call" -> {
                     System.out.println("You ring the police and get to safety.");
+                    Thread.sleep(500);
+                    System.out.println("You win!");
                     running = false;
                 }
-                case "Explore" -> {
+                case "Explore", "explore" -> {
                     System.out.println("You return to the living room to continue to explore.");
                     currentLocation = LIVING_ROOM;
                 }
 
+                case "Quit", "quit" -> running = false;
             }
         }
 
@@ -150,10 +154,8 @@ public class Game {
 
 
     static void exploreHall() {
-
         currentLocation = LIVING_ROOM;
     }
-
 
     public static void gameOver() {
         running = false;
