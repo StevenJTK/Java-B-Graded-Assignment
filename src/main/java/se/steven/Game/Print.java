@@ -4,6 +4,9 @@ package se.steven.Game;
 public class Print {
 
 
+    /* ----------------------------------------- */
+    /* -----------------GENERAL------------------ */
+
     public void chooseDirection() {
         System.out.println("You may explore the kitchen, bedroom, hall, office or stay in the living room.");
     }
@@ -96,4 +99,26 @@ public class Print {
     public void victoryChoice() {
         System.out.println("With the burglar defeated, you may choose to call the police or continue to explore.");
     }
+
+
+    /* ----------------------------------------- */
+    /* -----------------INTRODUCTION-------------------- */
+
+    public void introduce() throws InterruptedException {
+        System.out.println("Welcome to the game.");
+        Thread.sleep(1400);
+        System.out.println("You are a resident who decided to nap in the living room after a long day at work.");
+        Thread.sleep(1400);
+        System.out.println("However, you wake up to find a burglar has invaded your home, luckily for you, he hasn't found you yet.");
+        Thread.sleep(1400);
+        System.out.println("Make sure to read through each interaction, as this will determine the outcome of the game.");
+        Thread.sleep(1400);
+        System.out.println("In order to win, you must find a weapon and knock out the burglar.");
+        Thread.sleep(1400);
+        System.out.println("Once you have done so, you must call the police from the office. Then, you will have won the game.");
+        Thread.sleep(1400);
+        System.out.println("Good luck.");
+    }
+
+
 }
