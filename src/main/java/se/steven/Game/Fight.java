@@ -1,9 +1,10 @@
 package se.steven.Game;
 import se.steven.Models.Resident;
 import se.steven.Models.Burglar;
+import static se.steven.Game.Game.*;
 
 
-public class Fight extends Game {
+public class Fight {
 
     private static boolean running = true;
 
@@ -18,6 +19,7 @@ public class Fight extends Game {
 
             if (!defender.isConcious()) {
                 gameOver();
+
                 running = false;
                 break;
             }
@@ -30,6 +32,7 @@ public class Fight extends Game {
                 System.out.println("You have successfully knocked out the " + burglar.getRole() + "!");
                 Thread.sleep(1000);
                 System.out.println("Continue to the office in order to call the police and finish the game. ");
+
                 exploreHall();
                 running = false;
                 break;

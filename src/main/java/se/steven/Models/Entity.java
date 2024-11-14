@@ -11,7 +11,7 @@ package se.steven.Models;
             this.damage = damage;
         }
 
-        // Fetches values & returns
+
         public String getRole() {
 
             return role;
@@ -31,9 +31,7 @@ package se.steven.Models;
         public void punch(Entity toPunch) {
 
             toPunch.takeHit(damage);
-
-            if(toPunch.health < 0)
-                toPunch.health = 0;
+            toPunch.health = Math.max(0, toPunch.health);
         }
 
         public void takeHit(int damage) {
